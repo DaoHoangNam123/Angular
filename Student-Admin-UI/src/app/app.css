@@ -1,40 +1,33 @@
-main {
-  width: 90%;
-  max-width: 50rem;
-  margin: 2.5rem auto;
-  display: grid;
-  grid-auto-flow: row;
-  gap: 2rem;
-}
-
-#users {
-  list-style: none;
-  margin: 0;
+html,
+body,
+my-app {
   padding: 0;
+  height: 100%;
+}
+
+my-app {
   display: flex;
-  gap: 0.5rem;
-  overflow: auto;
+  flex-direction: column;
 }
 
-#fallback {
+kendo-drawer-container {
+  flex: 1 1 auto;
+  overflow-y: auto;
+}
+.k-icon {
+  font-size: 20px;
+}
+.custom-toolbar {
+  width: 100%;
+  background-color: #f6f6f6;
+  line-height: 10px;
+  border-bottom: inset;
+  border-bottom-width: 1px;
+  padding: 3px 8px;
+  color: #656565;
+}
+.mail-box {
+  margin-left: 20px;
   font-weight: bold;
-  font-size: 1.15rem;
-  margin: 0;
-  text-align: center;
-}
-
-@media (min-width: 768px) {
-  main {
-    margin: 4rem auto;
-    grid-template-columns: 1fr 3fr;
-  }
-
-  #users {
-    flex-direction: column;
-  }
-
-  #fallback {
-    font-size: 1.5rem;
-    text-align: left;
-  }
+  font-size: 17px;
 }
