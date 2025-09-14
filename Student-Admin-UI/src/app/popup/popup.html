@@ -1,1 +1,15 @@
-<p>popup works!</p>
+<kendo-dialog *ngIf="showDialog" (close)="closeDialog()">
+  <kendo-dialog-titlebar> Student Details </kendo-dialog-titlebar>
+
+  <div *ngIf="selectedStudent">
+    <p><strong>Name:</strong> {{ selectedStudent.fullName }}</p>
+    <p><strong>Birthdate:</strong> {{ selectedStudent.birthDate }}</p>
+    <p><strong>Address:</strong> {{ selectedStudent.address }}</p>
+    <p><strong>Gender:</strong> {{ selectedStudent.gender }}</p>
+    <p><strong>Description:</strong> {{ selectedStudent.description }}</p>
+  </div>
+
+  <kendo-dialog-actions>
+    <button kendoButton (click)="closeDialog()">Close</button>
+  </kendo-dialog-actions>
+</kendo-dialog>

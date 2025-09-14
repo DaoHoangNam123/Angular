@@ -1,18 +1,18 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
-import { StudentData } from '../models/student.model';
+import { IStudent } from '../models/student.model';
 
 @Injectable({ providedIn: 'root' })
 export class ApiService {
-  private readonly baseUrl = 'https://localhost:5001/api'; // Change to your ASP.NET API URL
+  private readonly baseUrl = 'http://localhost:5083/api';
 
   constructor(private readonly http: HttpClient) {}
 
-  getStudentList(): Observable<StudentData[]> {
-    return this.http.get<StudentData[]>(`${this.baseUrl}/students`);
+  getStudentList(): Observable<IStudent[]> {
+    return this.http.get<IStudent[]>(`${this.baseUrl}/students`);
   }
-  getStudentById(id: number): Observable<StudentData> {
-    return this.http.get<StudentData>(`${this.baseUrl}/students/${id}`);
+  getStudentById(id: number): Observable<IStudent> {
+    return this.http.get<IStudent>(`${this.baseUrl}/students/${id}`);
   }
 }

@@ -1,12 +1,13 @@
 <kendo-grid
-  [data]="gridView"
+  [data]="gridData"
   [pageSize]="pageSize"
   [skip]="skip"
   [pageable]="true"
-  (pageChange)="pageChange($event)"
+  (pageChange)="onPageChange($event)"
+  (cellClick)="onRowClick($event)"
 >
-  <kendo-grid-column field="id" title="ID"> </kendo-grid-column
-  ><kendo-grid-column field="fullName" title="Full Name"> </kendo-grid-column>
+  <kendo-grid-column field="id" title="ID"> </kendo-grid-column>
+  <kendo-grid-column field="fullName" title="Full Name"> </kendo-grid-column>
   <kendo-grid-column field="gender" title="Gender"> </kendo-grid-column>
   <kendo-grid-column field="description" title="Description"> </kendo-grid-column>
   <kendo-grid-column field="address" title="Address"> </kendo-grid-column>
