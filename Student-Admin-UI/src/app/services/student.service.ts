@@ -4,8 +4,8 @@ import { Observable } from 'rxjs';
 import { IStudent } from '../models/student.model';
 
 @Injectable({ providedIn: 'root' })
-export class ApiService {
-  private readonly baseUrl = 'http://localhost:5083/api';
+export class StudentService {
+  private readonly baseUrl = 'https://localhost:7276/api';
 
   constructor(private readonly http: HttpClient) {}
 
@@ -14,5 +14,9 @@ export class ApiService {
   }
   getStudentById(id: number): Observable<IStudent> {
     return this.http.get<IStudent>(`${this.baseUrl}/students/${id}`);
+  }
+  addStudent(student: IStudent): Observable<IStudent> {
+    let payload = { ...student, birthDay: new Date(student.birthDay) };
+    return this.http.post<IStudent>(`${this.baseUrl}/students`, payload);
   }
 }

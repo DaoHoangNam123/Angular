@@ -1,0 +1,14 @@
+<app-header></app-header>
+<div class="dashboard-container">
+  <div class="dashboard-header">
+    <h2>Student Dashboard</h2>
+    <button (click)="onClickAddStudent()" class="add-student-button">Add Student</button>
+  </div>
+  <app-student (rowClick)="onRowClick($event)"></app-student>
+</div>
+<app-popup
+  [selectedStudent]="selectedStudent"
+  [showDialog]="showDialog"
+  (dialogClose)="onDialogClose($event)"
+  (formChange)="onFormChange($event)"
+></app-popup>

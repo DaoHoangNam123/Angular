@@ -7,8 +7,7 @@
     "build": "ng build",
     "watch": "ng build --watch --configuration development",
     "test": "ng test",
-    "clean": "rimraf .angular/cache && rimraf node_modules/.vite",
-    "serve:ssr:Student-Admin-UI": "node dist/Student-Admin-UI/server/server.mjs"
+    "clean": "rimraf .angular/cache && rimraf node_modules/.vite"
   },
   "prettier": {
     "printWidth": 100,
@@ -58,10 +57,11 @@
     "@progress/kendo-angular-utils": "20.0.3",
     "@progress/kendo-data-query": "^1.0.0",
     "@progress/kendo-drawing": "^1.21.0",
-    "@progress/kendo-licensing": "^1.7.0",
+    "@progress/kendo-licensing": "^1.7.1",
     "@progress/kendo-svg-icons": "^4.0.0",
     "@progress/kendo-theme-default": "12.0.0",
     "express": "^5.1.0",
+    "kendo-ui-license": "^1.0.1",
     "rxjs": "~7.8.0",
     "tslib": "^2.3.0",
     "web-animations-js": "^2.3.2"

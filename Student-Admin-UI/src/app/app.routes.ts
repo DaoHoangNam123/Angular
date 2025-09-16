@@ -1,19 +1,12 @@
 import { Routes } from '@angular/router';
-import { Login } from './pages/login/login';
-import { Student } from './pages/student/student';
-import { Layout } from '@progress/kendo-drawing';
+import { LoginComponent } from './pages/login/login';
+import { Dashboard } from './pages/dashboard/dashboard';
 
 export const routes: Routes = [
   { path: '', redirectTo: 'login', pathMatch: 'full' },
-  { path: 'login', component: Login },
+  { path: 'login', component: LoginComponent },
   {
-    path: '',
-    component: Layout,
-    children: [
-      {
-        path: 'students',
-        component: Student,
-      },
-    ],
+    path: 'dashboard',
+    component: Dashboard,
   },
 ];

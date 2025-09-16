@@ -3,6 +3,6 @@ export interface IStudent {
   fullName: string;
   gender: string;
   address: string;
-  birthDate: Date;
+  birthDay: Date;
   description?: string;
 }

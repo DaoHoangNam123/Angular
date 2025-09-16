@@ -1,0 +1,16 @@
+.student-details {
+  width: 400px;
+  height: auto;
+  display: flex;
+  padding: 20px;
+  flex-direction: column;
+  gap: 10px;
+}
+.button-add {
+  color: white;
+  background-color: #2c3e50;
+}
+.button-close {
+  color: white;
+  background-color: #2c3e50;
+}

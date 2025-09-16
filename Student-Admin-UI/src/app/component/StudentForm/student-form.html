@@ -1,0 +1,47 @@
+<form kendoForm [formGroup]="studentForm" [cols]="2" [style.width.px]="600">
+  <kendo-formfield>
+    <kendo-label [for]="fullName" text="Full Name"></kendo-label>
+    <kendo-textbox formControlName="fullName" #fullName></kendo-textbox>
+    <kendo-formerror
+      *ngIf="studentForm.get('fullName')?.errors?.['required'] && studentForm.get('fullName')?.touched"
+    >
+      Full Name is required
+    </kendo-formerror>
+  </kendo-formfield>
+  <kendo-formfield>
+    <kendo-label [for]="birthDay" text="Birth Date"></kendo-label>
+    <kendo-textbox formControlName="birthDay" #birthDay></kendo-textbox>
+    <kendo-formerror
+      *ngIf="studentForm.get('birthDay')?.errors?.['required'] && studentForm.get('birthDay')?.touched"
+    >
+      Birth Date is required
+    </kendo-formerror>
+    <kendo-formerror *ngIf="studentForm.get('birthDay')?.errors?.['invalidDateFormat']">
+      Birth Date is invalid. Please use the format dd/mm/yyyy.
+    </kendo-formerror>
+  </kendo-formfield>
+  <kendo-formfield showErrors="always">
+    <kendo-label [for]="gender" text="Gender"></kendo-label>
+    <kendo-textbox formControlName="gender" #gender></kendo-textbox>
+    <kendo-formerror
+      *ngIf="studentForm.get('gender')?.errors?.['required'] && studentForm.get('gender')?.touched"
+    >
+      Gender is required
+    </kendo-formerror>
+  </kendo-formfield>
+
+  <kendo-formfield showErrors="always">
+    <kendo-label [for]="address" text="Address"></kendo-label>
+    <kendo-textbox formControlName="address" #address></kendo-textbox>
+    <kendo-formerror
+      *ngIf="studentForm.get('address')?.errors?.['required'] && studentForm.get('address')?.touched"
+    >
+      Address is required
+    </kendo-formerror>
+  </kendo-formfield>
+
+  <kendo-formfield [colSpan]="2">
+    <kendo-label [for]="description" text="Description"></kendo-label>
+    <kendo-textbox formControlName="description" #description></kendo-textbox>
+  </kendo-formfield>
+</form>
