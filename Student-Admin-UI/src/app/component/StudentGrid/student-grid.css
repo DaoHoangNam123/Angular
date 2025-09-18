@@ -1,0 +1,28 @@
+.k-table-td.action-student-button {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 5px;
+}
+
+.delete-student-button {
+  align-self: flex-end;
+  padding: 5px 10px;
+  background: darkred;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.edit-student-button {
+  align-self: flex-end;
+  padding: 5px 10px;
+  background: blue;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}

@@ -13,29 +13,47 @@ import { IStudent } from '../../models/student.model';
 export class Dashboard {
   @ViewChild(StudentGrid) child!: StudentGrid;
 
-  public studentForm: IStudent = {} as IStudent;
   public selectedStudent: IStudent | null = null;
-  public showDialog = false;
+  public isAddNew: boolean = false;
+  public isEdit: boolean = false;
+  public showDialog: boolean = false;
 
   onRowClick(student: IStudent) {
     this.selectedStudent = student;
     this.showDialog = true;
   }
-
-  onDialogClose(showDialog: boolean) {
-    this.showDialog = showDialog;
-
-    if (!this.selectedStudent) {
-      this.child.onAddStudent(this.studentForm);
+  dialogActionButton() {
+    if (this.isAddNew && this.selectedStudent) {
+      this.child.onAddStudent(this.selectedStudent);
     }
+
+    if (this.isEdit && this.selectedStudent) {
+      this.child.onUpdateStudent(this.selectedStudent);
+    }
+    this.isAddNew = false;
+    this.isEdit = false;
+    this.showDialog = false;
+  }
+
+  onDialogClose() {
+    this.isAddNew = false;
+    this.isEdit = false;
+    this.showDialog = false;
   }
 
   onClickAddStudent() {
-    this.selectedStudent = null;
+    this.isAddNew = true;
     this.showDialog = true;
+    this.selectedStudent = null;
   }
 
   onFormChange(form: IStudent) {
-    this.studentForm = form;
+    this.selectedStudent = form;
+  }
+
+  onEditStudent(data: IStudent) {
+    this.isEdit = true;
+    this.showDialog = true;
+    this.selectedStudent = data;
   }
 }

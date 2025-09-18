@@ -5,7 +5,7 @@ import { IStudent } from '../models/student.model';
 
 @Injectable({ providedIn: 'root' })
 export class StudentService {
-  private readonly baseUrl = 'https://localhost:7276/api';
+  private readonly baseUrl = 'http://localhost:5083/api';
 
   constructor(private readonly http: HttpClient) {}
 
@@ -18,5 +18,12 @@ export class StudentService {
   addStudent(student: IStudent): Observable<IStudent> {
     let payload = { ...student, birthDay: new Date(student.birthDay) };
     return this.http.post<IStudent>(`${this.baseUrl}/students`, payload);
+  }
+  deleteStudent(id: number): Observable<IStudent> {
+    return this.http.delete<IStudent>(`${this.baseUrl}/students/${id}`);
+  }
+  updateStudent(id: number, student: IStudent): Observable<IStudent> {
+    let payload = { ...student, birthDay: new Date(student.birthDay) };
+    return this.http.put<IStudent>(`${this.baseUrl}/students/${id}`, payload);
   }
 }

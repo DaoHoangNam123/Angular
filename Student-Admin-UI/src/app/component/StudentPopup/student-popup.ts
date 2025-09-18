@@ -14,7 +14,11 @@ import { StudentForm } from '../StudentForm/student-form';
 export class StudentPopup {
   @Input() public selectedStudent: IStudent | null = null;
   @Input() public showDialog = false;
+  @Input() public isAddNew = false;
+  @Input() public isEdit = false;
+
   @Output() public dialogClose = new EventEmitter<boolean>();
+  @Output() public dialogActionButton = new EventEmitter<boolean>();
   @Output() public formChange = new EventEmitter<IStudent>();
 
   onFormChange(form: IStudent) {
@@ -22,7 +26,10 @@ export class StudentPopup {
   }
 
   closeDialog() {
-    this.showDialog = false;
     this.dialogClose.emit(false);
+  }
+
+  onClickActionButton() {
+    this.dialogActionButton.emit(false);
   }
 }

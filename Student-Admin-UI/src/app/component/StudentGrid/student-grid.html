@@ -13,4 +13,10 @@
   <kendo-grid-column field="address" title="Address"> </kendo-grid-column>
   <kendo-grid-column field="gender" title="Gender"> </kendo-grid-column>
   <kendo-grid-column field="description" title="Description"> </kendo-grid-column>
+  <kendo-grid-column title="Action" class="action-student-button">
+    <ng-template kendoGridCellTemplate let-dataItem>
+      <button class="delete-student-button" (click)="onEdit(dataItem)">Edit</button>
+      <button class="edit-student-button" (click)="onDelete(dataItem)">Delete</button>
+    </ng-template>
+  </kendo-grid-column>
 </kendo-grid>

@@ -14,6 +14,7 @@ export class AuthInterceptor implements HttpInterceptor {
   constructor(private readonly router: Router) {}
   intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
     const token = localStorage.getItem('access_token');
+    console.log(token);
     if (token) {
       const authReq = req.clone({
         setHeaders: {

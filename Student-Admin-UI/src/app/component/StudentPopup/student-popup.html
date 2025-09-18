@@ -3,7 +3,7 @@
     Student Details
   </kendo-dialog-titlebar>
 
-  <div *ngIf="selectedStudent" class="student-details">
+  <div *ngIf="!(isAddNew || isEdit) && selectedStudent" class="student-details">
     <p><strong>Name:</strong> {{ selectedStudent.fullName }}</p>
     <p><strong>Birthday:</strong> {{ selectedStudent.birthDay | date : 'dd/MM/yyyy' }}</p>
     <p><strong>Address:</strong> {{ selectedStudent.address }}</p>
@@ -11,17 +11,20 @@
     <p><strong>Description:</strong> {{ selectedStudent.description }}</p>
   </div>
 
-  <div *ngIf="!selectedStudent">
-    <app-student-form (studentFormChange)="onFormChange($event)"></app-student-form>
+  <div *ngIf="isAddNew || isEdit">
+    <app-student-form
+      (studentFormChange)="onFormChange($event)"
+      [selectedStudent]="selectedStudent"
+    ></app-student-form>
   </div>
 
   <kendo-dialog-actions>
     <button
       kendoButton
-      (click)="closeDialog()"
-      class="button-{{ selectedStudent ? 'close' : 'add' }}"
+      (click)="onClickActionButton()"
+      class="button-{{ !(isAddNew || isEdit) ? 'Close' : isAddNew ? 'Add' : 'Edit' }}"
     >
-      {{ selectedStudent ? 'Close' : 'Add' }}
+      {{ !(isAddNew || isEdit) ? 'Close' : isAddNew ? 'Add' : 'Edit' }}
     </button>
   </kendo-dialog-actions>
 </kendo-dialog>
