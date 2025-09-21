@@ -1,22 +1,36 @@
-import { ChangeDetectorRef, Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import {
+  ChangeDetectorRef,
+  Component,
+  EventEmitter,
+  Input,
+  OnInit,
+  Output,
+  ViewChild,
+} from '@angular/core';
 import {
   CellClickEvent,
   GridDataResult,
   KENDO_GRID,
   PageChangeEvent,
 } from '@progress/kendo-angular-grid';
-import { StudentService } from '../../services/student.service';
 import { IStudent } from '../../models/student.model';
 import { mappingDataToUI } from '../../utils/mappingData';
 import { CommonModule } from '@angular/common';
 import { Router } from '@angular/router';
+import { Toaster } from '../Toaster/toaster';
+import { Dialog } from '../Dialog/dialog';
+import { StudentService } from '../../api/student.api';
+import { AuthService } from '../../services/auth.service';
 @Component({
   selector: 'app-student',
   templateUrl: './student-grid.html',
   styleUrls: ['./student-grid.css'],
-  imports: [CommonModule, KENDO_GRID],
+  imports: [CommonModule, KENDO_GRID, Toaster, Dialog],
 })
 export class StudentGrid implements OnInit {
+  @ViewChild(Toaster) toaster!: Toaster;
+  @ViewChild(Dialog) dialog!: Dialog;
+
   @Input() public gridData!: GridDataResult;
   @Input() public pageSize = 5;
   @Input() public skip = 0;
@@ -24,11 +38,13 @@ export class StudentGrid implements OnInit {
   @Output() public editStudent = new EventEmitter<IStudent>();
 
   public studentList: IStudent[] = [];
+  public selectedItem: IStudent | null = null;
 
   constructor(
     private readonly api: StudentService,
     private readonly cdr: ChangeDetectorRef,
-    private readonly router: Router
+    private readonly router: Router,
+    private readonly auth: AuthService
   ) {}
 
   private _loadItems() {
@@ -42,6 +58,7 @@ export class StudentGrid implements OnInit {
     this.api.addStudent(studentForm).subscribe({
       next: () => {
         this.fetchStudents();
+        this.toaster.showNotification('success', 'Student added successfully.');
         this.cdr.detectChanges();
       },
     });
@@ -51,7 +68,12 @@ export class StudentGrid implements OnInit {
     this.api.updateStudent(studentForm.id, studentForm).subscribe({
       next: () => {
         this.fetchStudents();
+        this.toaster.showNotification('success', 'Student updated successfully.');
         this.cdr.detectChanges();
+      },
+      error: (err) => {
+        console.error('>>>>>>>Error', err);
+        this.toaster.showNotification('error', 'Failed to update student.');
       },
     });
   }
@@ -69,14 +91,26 @@ export class StudentGrid implements OnInit {
     this.editStudent.emit(data);
   }
 
+  onClickDeleteStudent(status: string) {
+    if (status == 'yes' && this.selectedItem) {
+      this.api.deleteStudent(this.selectedItem.id).subscribe({
+        next: () => {
+          this.fetchStudents();
+          this.toaster.showNotification('success', 'Student deleted successfully.');
+          this.cdr.detectChanges();
+        },
+        error: (err) => {
+          console.error('>>>>>>>Error', err);
+          this.toaster.showNotification('error', 'Failed to delete student.');
+        },
+      });
+    }
+    this.selectedItem = null;
+  }
+
   onDelete(data: IStudent) {
-    console.log(data);
-    this.api.deleteStudent(data.id).subscribe({
-      next: () => {
-        this.fetchStudents();
-        this.cdr.detectChanges();
-      },
-    });
+    this.selectedItem = data;
+    this.dialog.toggle();
   }
 
   onPageChange(event: PageChangeEvent) {
@@ -93,7 +127,8 @@ export class StudentGrid implements OnInit {
       },
       error: (err) => {
         console.error('>>>>>>>Error', err);
-        if (err.status == 401) {
+        if (err.status == 401 || err.status == 0) {
+          this.auth.logout();
           this.router.navigate(['/login']);
         }
       },

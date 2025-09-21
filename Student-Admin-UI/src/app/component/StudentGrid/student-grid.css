@@ -1,8 +1,8 @@
-.k-table-td.action-student-button {
+.action-student-button {
   display: flex;
   justify-content: center;
   align-items: center;
-  gap: 5px;
+  gap: 10px;
 }
 
 .delete-student-button {

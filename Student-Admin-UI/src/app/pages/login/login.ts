@@ -1,9 +1,10 @@
 import { ChangeDetectorRef, Component } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
-import { AuthService } from '../../services/auth.service';
 import { finalize } from 'rxjs';
 import { Router } from '@angular/router';
+import { LoginService } from '../../api/login.api';
+import { AuthService } from '../../services/auth.service';
 @Component({
   selector: 'app-login',
   imports: [CommonModule, FormsModule],
@@ -17,9 +18,10 @@ export class LoginComponent {
   public loading = false;
 
   constructor(
-    private readonly api: AuthService,
+    private readonly api: LoginService,
     private readonly cdr: ChangeDetectorRef,
-    private readonly router: Router
+    private readonly router: Router,
+    private readonly auth: AuthService
   ) {}
   onSubmit() {
     if (!this.email || !this.password) {
@@ -41,7 +43,8 @@ export class LoginComponent {
         )
         .subscribe({
           next: (res) => {
-            localStorage.setItem('access_token', res.jwtToken);
+            console.log('>>>>>>>res', res);
+            this.auth.login(res.jwtToken);
             this.router.navigate(['/dashboard']);
           },
           error: (err) => {

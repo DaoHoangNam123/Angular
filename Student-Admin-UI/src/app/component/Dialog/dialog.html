@@ -1,0 +1,11 @@
+<div class="dialog-wrapper">
+  @if (dialogOpened) {
+  <kendo-dialog title="Please confirm" (close)="toggle()" [minWidth]="250" [width]="450">
+    <p style="margin: 30px; text-align: center">{{ title }}</p>
+    <kendo-dialog-actions>
+      <button kendoButton (click)="action('no')">No</button>
+      <button kendoButton (click)="action('yes')" themeColor="primary">Yes</button>
+    </kendo-dialog-actions>
+  </kendo-dialog>
+  }
+</div>
