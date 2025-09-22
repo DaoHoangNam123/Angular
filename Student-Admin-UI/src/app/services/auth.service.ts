@@ -23,7 +23,6 @@ export class AuthService {
   }
 
   public hasToken(): boolean {
-    console.log('>>>>>>>hasToken', localStorage.getItem('access_token'));
     return !!localStorage.getItem('access_token');
   }
 }

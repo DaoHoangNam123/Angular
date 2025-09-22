@@ -7,7 +7,6 @@ export class AuthGuard implements CanActivate {
   constructor(private readonly auth: AuthService, private readonly router: Router) {}
 
   canActivate(): boolean {
-    console.log('>>>>>>>canActivate', this.auth.hasToken());
     if (!this.auth.hasToken()) {
       this.router.navigate(['/login']);
       return false;

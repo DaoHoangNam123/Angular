@@ -22,6 +22,8 @@ export class Dashboard {
     this.selectedStudent = student;
     this.showDialog = true;
   }
+
+  /* Dialog action yes no button */
   dialogActionButton() {
     if (this.isAddNew && this.selectedStudent) {
       this.child.onAddStudent(this.selectedStudent);
@@ -41,6 +43,7 @@ export class Dashboard {
     this.showDialog = false;
   }
 
+  /* Click add student button */
   onClickAddStudent() {
     this.isAddNew = true;
     this.showDialog = true;
@@ -51,6 +54,7 @@ export class Dashboard {
     this.selectedStudent = form;
   }
 
+  /* Click edit button */
   onEditStudent(data: IStudent) {
     this.isEdit = true;
     this.showDialog = true;

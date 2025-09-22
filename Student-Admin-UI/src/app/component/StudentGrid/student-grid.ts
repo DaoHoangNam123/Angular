@@ -53,7 +53,7 @@ export class StudentGrid implements OnInit {
       total: this.studentList.length,
     };
   }
-
+  /* Call API to add student */
   onAddStudent(studentForm: IStudent) {
     this.api.addStudent(studentForm).subscribe({
       next: () => {
@@ -64,6 +64,7 @@ export class StudentGrid implements OnInit {
     });
   }
 
+  /* Call API to update student */
   onUpdateStudent(studentForm: IStudent) {
     this.api.updateStudent(studentForm.id, studentForm).subscribe({
       next: () => {
@@ -72,12 +73,12 @@ export class StudentGrid implements OnInit {
         this.cdr.detectChanges();
       },
       error: (err) => {
-        console.error('>>>>>>>Error', err);
         this.toaster.showNotification('error', 'Failed to update student.');
       },
     });
   }
 
+  /* Call API to get student details */
   onRowClick(event: CellClickEvent) {
     this.api.getStudentById(event.dataItem.id).subscribe({
       next: (data) => {
@@ -91,6 +92,7 @@ export class StudentGrid implements OnInit {
     this.editStudent.emit(data);
   }
 
+  /* Call API to delete student */
   onClickDeleteStudent(status: string) {
     if (status == 'yes' && this.selectedItem) {
       this.api.deleteStudent(this.selectedItem.id).subscribe({
@@ -100,7 +102,6 @@ export class StudentGrid implements OnInit {
           this.cdr.detectChanges();
         },
         error: (err) => {
-          console.error('>>>>>>>Error', err);
           this.toaster.showNotification('error', 'Failed to delete student.');
         },
       });
@@ -108,16 +109,19 @@ export class StudentGrid implements OnInit {
     this.selectedItem = null;
   }
 
+  /* Click delete button */
   onDelete(data: IStudent) {
     this.selectedItem = data;
     this.dialog.toggle();
   }
 
+  /* Click next page */
   onPageChange(event: PageChangeEvent) {
     this.skip = event.skip;
     this._loadItems();
   }
 
+  /* Fetch student list from API */
   fetchStudents() {
     this.api.getStudentList().subscribe({
       next: (data) => {
@@ -126,7 +130,6 @@ export class StudentGrid implements OnInit {
         this.cdr.detectChanges();
       },
       error: (err) => {
-        console.error('>>>>>>>Error', err);
         if (err.status == 401 || err.status == 0) {
           this.auth.logout();
           this.router.navigate(['/login']);

@@ -21,6 +21,7 @@ export class Toaster {
     type: { style: 'success', icon: true },
     animation: { type: 'slide', duration: 400 },
     hideAfter: 5000,
+    position: { horizontal: 'right', vertical: 'bottom' },
   };
 
   constructor(private readonly notificationService: NotificationService) {}

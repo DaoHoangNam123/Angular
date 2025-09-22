@@ -1,10 +1,11 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
+import { environment } from '../../environments/evironments';
 
 @Injectable({ providedIn: 'root' })
 export class LoginService {
-  private readonly baseUrl = 'http://localhost:5083/api';
+  private readonly baseUrl = environment.apiUrl;
 
   constructor(private readonly http: HttpClient) {}
 

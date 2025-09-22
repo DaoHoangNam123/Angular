@@ -23,6 +23,8 @@ export class LoginComponent {
     private readonly router: Router,
     private readonly auth: AuthService
   ) {}
+
+  /* Submit login form */
   onSubmit() {
     if (!this.email || !this.password) {
       this.errorMessage = 'Please enter both email and password';
@@ -43,7 +45,6 @@ export class LoginComponent {
         )
         .subscribe({
           next: (res) => {
-            console.log('>>>>>>>res', res);
             this.auth.login(res.jwtToken);
             this.router.navigate(['/dashboard']);
           },
@@ -54,7 +55,6 @@ export class LoginComponent {
         });
     } catch (error) {
       this.loading = false;
-      console.log('>>>>>>>Error', error);
     }
   }
 }

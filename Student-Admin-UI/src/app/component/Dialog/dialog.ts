@@ -14,7 +14,6 @@ export class Dialog {
   public dialogOpened!: boolean;
 
   public action(status: string) {
-    console.log(`Dialog result: ${status}`);
     this.dialogOpened = false;
     this.deleteStudent.emit(status);
   }
