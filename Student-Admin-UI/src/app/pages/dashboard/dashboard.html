@@ -4,14 +4,5 @@
     <h2>Student Dashboard</h2>
     <button (click)="onClickAddStudent()" class="add-student-button">Add Student</button>
   </div>
-  <app-student (rowClick)="onRowClick($event)" (editStudent)="onEditStudent($event)"></app-student>
+  <app-student></app-student>
 </div>
-<app-popup
-  [selectedStudent]="selectedStudent"
-  [isAddNew]="isAddNew"
-  [isEdit]="isEdit"
-  [showDialog]="showDialog"
-  (dialogClose)="onDialogClose()"
-  (dialogActionButton)="dialogActionButton()"
-  (formChange)="onFormChange($event)"
-></app-popup>

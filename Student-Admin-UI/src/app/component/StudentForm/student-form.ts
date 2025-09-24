@@ -15,6 +15,8 @@ import { IStudent } from '../../models/student.model';
 export class StudentForm implements OnInit {
   @Output() studentFormChange = new EventEmitter<any>();
   @Input() selectedStudent: IStudent | null = null;
+  @Input() isReadOnly: boolean = false;
+
   public studentForm: FormGroup = new FormGroup({
     id: new FormControl(''),
     index: new FormControl(''),

@@ -1,63 +1,39 @@
 import { Component, ViewChild } from '@angular/core';
 import { StudentGrid } from '../../component/StudentGrid/student-grid';
-import { StudentPopup } from '../../component/StudentPopup/student-popup';
 import { Header } from '../../component/Header/header';
-import { IStudent } from '../../models/student.model';
+import { DialogRef, DialogService } from '@progress/kendo-angular-dialog';
+import { StudentForm } from '../../component/StudentForm/student-form';
 
 @Component({
   selector: 'app-dashboard',
-  imports: [StudentGrid, StudentPopup, Header],
+  imports: [StudentGrid, Header],
   templateUrl: './dashboard.html',
   styleUrls: ['./dashboard.css'],
 })
 export class Dashboard {
-  @ViewChild(StudentGrid) child!: StudentGrid;
-
-  public selectedStudent: IStudent | null = null;
-  public isAddNew: boolean = false;
-  public isEdit: boolean = false;
-  public showDialog: boolean = false;
-
-  onRowClick(student: IStudent) {
-    this.selectedStudent = student;
-    this.showDialog = true;
-  }
-
-  /* Dialog action yes no button */
-  dialogActionButton() {
-    if (this.isAddNew && this.selectedStudent) {
-      this.child.onAddStudent(this.selectedStudent);
-    }
-
-    if (this.isEdit && this.selectedStudent) {
-      this.child.onUpdateStudent(this.selectedStudent);
-    }
-    this.isAddNew = false;
-    this.isEdit = false;
-    this.showDialog = false;
-  }
-
-  onDialogClose() {
-    this.isAddNew = false;
-    this.isEdit = false;
-    this.showDialog = false;
-  }
+  @ViewChild(StudentGrid) studentGrid!: StudentGrid;
+  constructor(private readonly dialogService: DialogService) {}
 
   /* Click add student button */
   onClickAddStudent() {
-    this.isAddNew = true;
-    this.showDialog = true;
-    this.selectedStudent = null;
-  }
+    const dialogRef: DialogRef = this.dialogService.open({
+      title: 'Please enter student details',
+      content: StudentForm,
+      actions: [{ text: 'Cancel' }, { text: 'Add', themeColor: 'primary', disabled: true }],
+    });
 
-  onFormChange(form: IStudent) {
-    this.selectedStudent = form;
-  }
+    const form = dialogRef.content.instance as StudentForm;
 
-  /* Click edit button */
-  onEditStudent(data: IStudent) {
-    this.isEdit = true;
-    this.showDialog = true;
-    this.selectedStudent = data;
+    form.studentForm.valueChanges.subscribe(() => {
+      const isValid = form.studentForm.valid;
+      dialogRef.dialog.instance.actions[1].disabled = !isValid;
+    });
+
+    dialogRef.result.subscribe((result: any) => {
+      if (result && result.text === 'Add') {
+        const newStudent = form.studentForm.value;
+        this.studentGrid.onAddStudent(newStudent);
+      }
+    });
   }
 }

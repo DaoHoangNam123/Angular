@@ -1,7 +1,7 @@
 <form kendoForm [formGroup]="studentForm" [cols]="2" [style.width.px]="600">
   <kendo-formfield>
     <kendo-label [for]="fullName" text="Full Name"></kendo-label>
-    <kendo-textbox formControlName="fullName" #fullName></kendo-textbox>
+    <kendo-textbox formControlName="fullName" #fullName [readonly]="isReadOnly"></kendo-textbox>
     <kendo-formerror
       *ngIf="studentForm.get('fullName')?.errors?.['required'] && studentForm.get('fullName')?.touched"
     >
