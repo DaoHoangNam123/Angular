@@ -6,8 +6,8 @@
 
 html,
 body {
-  height: 100%;
-  width: 100%;
+  height: 100vh;
+  width: 100vw;
   font-family: Arial, sans-serif;
 }
 
@@ -18,11 +18,11 @@ body {
 
 app-root {
   display: flex;
-  background: linear-gradient(#141e30, #243b55);
   flex-direction: column;
   align-items: center;
   justify-content: flex-start;
-  width: 100vw;
+  width: 100%;
+  height: 100%;
 }
 
 app-login {
@@ -33,8 +33,23 @@ app-login {
   justify-content: center;
 }
 
-app-dashboard {
-  width: 100vw;
-  height: 100vh;
-  background-color: white;
+app-layout {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  height: 100%;
+}
+
+.mat-mdc-form-field-bottom-align {
+  margin-bottom: 0 !important;
+  padding-bottom: 0 !important;
+  min-height: 0 !important;
+}
+
+app-root > .k-icon.k-i-loading {
+  font-size: 64px;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
 }

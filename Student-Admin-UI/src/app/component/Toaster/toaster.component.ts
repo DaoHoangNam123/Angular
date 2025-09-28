@@ -1,6 +1,5 @@
 import { Component, TemplateRef, ViewChild } from '@angular/core';
 import {
-  KENDO_NOTIFICATION,
   NotificationRef,
   NotificationService,
   NotificationSettings,
@@ -8,11 +7,11 @@ import {
 
 @Component({
   selector: 'app-toaster',
-  templateUrl: './toaster.html',
-  styleUrls: ['./toaster.css'],
-  imports: [KENDO_NOTIFICATION],
+  templateUrl: './toaster.component.html',
+  styleUrls: ['./toaster.component.css'],
+  standalone: false,
 })
-export class Toaster {
+export class ToasterComponent {
   @ViewChild('notification', { read: TemplateRef })
   public notificationTemplate!: TemplateRef<any>;
   public notificationReference!: NotificationRef;

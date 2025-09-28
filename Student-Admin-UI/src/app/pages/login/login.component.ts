@@ -1,15 +1,13 @@
 import { ChangeDetectorRef, Component } from '@angular/core';
-import { FormsModule } from '@angular/forms';
-import { CommonModule } from '@angular/common';
 import { finalize } from 'rxjs';
 import { Router } from '@angular/router';
 import { LoginService } from '../../api/login.api';
 import { AuthService } from '../../services/auth.service';
 @Component({
   selector: 'app-login',
-  imports: [CommonModule, FormsModule],
-  templateUrl: './login.html',
-  styleUrls: ['./login.css'],
+  templateUrl: './login.component.html',
+  styleUrls: ['./login.component.css'],
+  standalone: false,
 })
 export class LoginComponent {
   public email = '';
@@ -55,6 +53,7 @@ export class LoginComponent {
         });
     } catch (error) {
       this.loading = false;
+      console.error('Login error:', error);
     }
   }
 }

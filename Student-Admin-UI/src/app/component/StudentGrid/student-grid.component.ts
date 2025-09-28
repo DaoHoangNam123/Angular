@@ -8,32 +8,26 @@ import {
   Output,
   ViewChild,
 } from '@angular/core';
-import {
-  CellClickEvent,
-  GridDataResult,
-  KENDO_GRID,
-  PageChangeEvent,
-} from '@progress/kendo-angular-grid';
+import { CellClickEvent, GridDataResult, PageChangeEvent } from '@progress/kendo-angular-grid';
 import { IStudent } from '../../models/student.model';
 import { mappingDataToUI } from '../../utils/mappingData';
-import { CommonModule } from '@angular/common';
 import { Router } from '@angular/router';
-import { Toaster } from '../Toaster/toaster';
+import { ToasterComponent } from '../Toaster/toaster.component';
 import { StudentService } from '../../api/student.api';
 import { AuthService } from '../../services/auth.service';
 import { Subscription } from 'rxjs';
-import { DialogRef, DialogService, KENDO_DIALOG } from '@progress/kendo-angular-dialog';
-import { StudentForm } from '../StudentForm/student-form';
-import { StudentPopup } from '../StudentPopup/student-popup';
+import { DialogRef, DialogService } from '@progress/kendo-angular-dialog';
+import { StudentFormComponent } from '../StudentForm/student-form.component';
+import { StudentPopupComponent } from '../StudentPopup/student-popup.component';
 @Component({
   selector: 'app-student',
-  templateUrl: './student-grid.html',
-  styleUrls: ['./student-grid.css'],
-  imports: [CommonModule, KENDO_GRID, KENDO_DIALOG, Toaster, StudentPopup],
+  templateUrl: './student-grid.component.html',
+  styleUrls: ['./student-grid.component.css'],
+  standalone: false,
 })
-export class StudentGrid implements OnInit, OnDestroy {
-  @ViewChild(Toaster) toaster!: Toaster;
-  @ViewChild(StudentPopup) studentPopup!: StudentPopup;
+export class StudentGridComponent implements OnInit, OnDestroy {
+  @ViewChild(ToasterComponent) toaster!: ToasterComponent;
+  @ViewChild(StudentPopupComponent) studentPopup!: StudentPopupComponent;
 
   @Input() public gridData!: GridDataResult;
   @Input() public pageSize = 5;
@@ -106,11 +100,11 @@ export class StudentGrid implements OnInit, OnDestroy {
   onEdit(data: IStudent) {
     const dialogRef: DialogRef = this.dialogService.open({
       title: 'Please edit student details',
-      content: StudentForm,
+      content: StudentFormComponent,
       actions: [{ text: 'Cancel' }, { text: 'Edit', themeColor: 'primary', disabled: true }],
     });
 
-    const form = dialogRef.content.instance as StudentForm;
+    const form = dialogRef.content.instance as StudentFormComponent;
     form.selectedStudent = data;
 
     form.studentForm.valueChanges.subscribe(() => {

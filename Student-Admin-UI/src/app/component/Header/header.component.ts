@@ -4,11 +4,11 @@ import { AuthService } from '../../services/auth.service';
 
 @Component({
   selector: 'app-header',
-  imports: [],
-  templateUrl: './header.html',
-  styleUrls: ['./header.css'],
+  templateUrl: './header.component.html',
+  styleUrls: ['./header.component.css'],
+  standalone: false,
 })
-export class Header {
+export class HeaderComponent {
   constructor(private readonly router: Router, private readonly authService: AuthService) {}
   logout() {
     this.authService.logout();

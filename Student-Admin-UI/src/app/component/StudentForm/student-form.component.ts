@@ -1,18 +1,15 @@
-import { CommonModule } from '@angular/common';
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
-import { KENDO_INPUTS } from '@progress/kendo-angular-inputs';
-import { KENDO_LABELS } from '@progress/kendo-angular-label';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { dateFormatValidator, formatDate } from '../../utils/helper';
 import { IStudent } from '../../models/student.model';
 
 @Component({
   selector: 'app-student-form',
-  imports: [CommonModule, ReactiveFormsModule, KENDO_INPUTS, KENDO_LABELS],
-  templateUrl: './student-form.html',
-  styleUrls: ['./student-form.css'],
+  templateUrl: './student-form.component.html',
+  styleUrls: ['./student-form.component.css'],
+  standalone: false,
 })
-export class StudentForm implements OnInit {
+export class StudentFormComponent implements OnInit {
   @Output() studentFormChange = new EventEmitter<any>();
   @Input() selectedStudent: IStudent | null = null;
   @Input() isReadOnly: boolean = false;
