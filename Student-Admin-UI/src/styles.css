@@ -53,3 +53,10 @@ app-root > .k-icon.k-i-loading {
   left: 50%;
   transform: translate(-50%, -50%);
 }
+
+.k-treeview .k-treeview-leaf-text {
+  white-space: nowrap !important;
+  overflow: hidden !important;
+  text-overflow: ellipsis !important;
+  max-width: 100px;
+}

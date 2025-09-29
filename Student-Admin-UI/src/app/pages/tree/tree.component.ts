@@ -1,24 +1,17 @@
-import {
-  ChangeDetectorRef,
-  Component,
-  OnDestroy,
-  OnInit,
-  TemplateRef,
-  ViewChild,
-} from '@angular/core';
+import { ChangeDetectorRef, Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { Subscription } from 'rxjs';
 import { GridDataResult } from '@progress/kendo-angular-grid';
 import { TreeService } from '../../api/tree.api';
-import { ITreeNode } from '../../models/treeNode.model';
+import { ITreeAttribute, ITreeNode } from '../../models/treeNode.model';
 import { DialogRef, DialogService } from '@progress/kendo-angular-dialog';
 import { ToasterComponent } from '../../component/Toaster/toaster.component';
+import { StudentNodeService } from '../../services/studentNode.service';
 
 @Component({
   selector: 'app-tree',
   templateUrl: './tree.component.html',
   styleUrls: ['./tree.component.css'],
   standalone: false,
-  template: `<input matInput class="node-info__field" [(ngModel)]="title" />`,
 })
 export class TreeComponent implements OnInit, OnDestroy {
   @ViewChild(ToasterComponent) toaster!: ToasterComponent;
@@ -26,7 +19,8 @@ export class TreeComponent implements OnInit, OnDestroy {
   constructor(
     private readonly api: TreeService,
     private readonly cdr: ChangeDetectorRef,
-    private readonly dialogService: DialogService
+    private readonly dialogService: DialogService,
+    private readonly studentNodeService: StudentNodeService
   ) {}
 
   public subscription = new Subscription();
@@ -38,49 +32,35 @@ export class TreeComponent implements OnInit, OnDestroy {
   public types = [0, 1].map((i) => ({ id: i, name: i === 1 ? 'Folder' : 'File' }));
 
   public hasChildren = (item: any) => item.type && item.type === 1;
+
   public fetchChildren = (item: object) => {
     const node = item as ITreeNode;
     return this.api.getTreeNodeChildren(node.id);
   };
 
-  public fetchTreeList() {
-    this.subscription.add(
-      this.api.getRootTreeNodeData().subscribe({
-        next: (nodeList: ITreeNode[]) => {
-          this.treeData = nodeList;
-          this.cdr.detectChanges();
-        },
-      })
-    );
-  }
-  public content = () => `<input matInput class="node-info__field" [(ngModel)]="title" />`;
-
-  /* Call API to edit attribute */
-  onEdit(data: ITreeNode) {
+  /* 
+    Call API to save edit attribute 
+  */
+  onSave(data: ITreeAttribute) {
     const dialogRef: DialogRef = this.dialogService.open({
       title: 'Please edit node details',
-      content: this.content,
-      actions: [{ text: 'Cancel' }, { text: 'Edit', themeColor: 'primary', disabled: true }],
+      content: 'Are you sure you want save this attribute?',
+      actions: [{ text: 'Cancel' }, { text: 'Edit', themeColor: 'primary' }],
     });
 
     dialogRef.result.subscribe((result: any) => {
       if (result && result.text === 'Edit') {
-        const updatedNode = { ...data, title: this.title, type: this.type };
-        return updatedNode;
+        this.subscription.add(
+          this.studentNodeService.onUpdateTreeAttribute(data.id, { value: data.value })
+        );
       }
-      return null;
     });
   }
 
-  /* Call API to delete attribute */
-  onClickDelete(status: string) {
-    if (status == 'yes' && this.selectedNode) {
-      console.log('Deleting node:', this.selectedNode);
-    }
-  }
-
-  /* Click delete button */
-  onDelete(data: ITreeNode) {
+  /* 
+    Click delete button 
+  */
+  onDelete(data: ITreeAttribute) {
     const dialogRef: DialogRef = this.dialogService.open({
       title: 'Please confirm deletion',
       content: `Are you sure you want to delete this attribute?`,
@@ -89,49 +69,54 @@ export class TreeComponent implements OnInit, OnDestroy {
 
     dialogRef.result.subscribe((result: any) => {
       if (result && result.text === 'Delete') {
-        this.selectedNode = data;
-        this.onClickDelete('yes');
+        this.subscription.add(this.studentNodeService.onDeleteTreeAttribute(data.id));
       }
     });
   }
 
+  /* 
+    Click each child node 
+  */
   onNodeClick(event: any) {
-    const node: ITreeNode = event.item.dataItem;
-    this.selectedNode = node;
-    this.title = node.title;
-    this.type = node.type;
-
-    this.gridData = {
-      data: node.attributes.map((item, index) => ({ ...item, index })),
-      total: node.attributes.length,
-    };
-
-    this.cdr.detectChanges();
+    this.selectedNode = event.item.dataItem;
+    this.subscription.add(this.studentNodeService.onNodeClick(event));
   }
 
+  /* 
+    Click save node information button 
+  */
   saveNode() {
     if (this.selectedNode) {
       this.subscription.add(
-        this.api
-          .updateTreeNodeById(this.selectedNode.id, { title: this.title, type: this.type })
-          .subscribe({
-            next: (updatedNode) => {
-              this.fetchTreeList();
-              this.cdr.detectChanges();
-              console.log('Node updated successfully:', updatedNode);
-            },
-            error: (error) => {
-              console.error('Error updating node:', error);
-            },
-          })
+        this.studentNodeService.onSaveNode(this.selectedNode.id, {
+          title: this.title,
+          type: this.type,
+        })
       );
     }
   }
 
   // Lifecycle hooks
   ngOnInit(): void {
-    this.fetchTreeList();
+    this.subscription.add(this.studentNodeService.getTreeData());
+
+    this.studentNodeService.treeData$.subscribe((data) => {
+      this.treeData = data;
+      this.cdr.detectChanges();
+    });
+
+    this.studentNodeService.attributesData$.subscribe((attributes) => {
+      this.gridData = attributes;
+      this.cdr.detectChanges();
+    });
+
+    this.studentNodeService.nodeInformation$.subscribe((node) => {
+      this.title = node.title;
+      this.type = node.type;
+      this.cdr.detectChanges();
+    });
   }
+
   ngOnDestroy(): void {
     this.subscription.unsubscribe();
   }

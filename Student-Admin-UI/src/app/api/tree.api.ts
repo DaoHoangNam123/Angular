@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
-import { ITreeNode } from '../models/treeNode.model';
+import { ITreeAttribute, ITreeNode } from '../models/treeNode.model';
 import { environment } from '../../environments/evironments';
 
 @Injectable({ providedIn: 'root' })
@@ -28,5 +28,16 @@ export class TreeService {
 
   updateTreeNodeById(id: string, data: Partial<ITreeNode>): Observable<ITreeNode> {
     return this.http.put<ITreeNode>(`${this.baseUrl}/tree/${id}`, data);
+  }
+
+  deleteTreeNodeAttribute(id: string): Observable<ITreeAttribute> {
+    return this.http.delete<ITreeAttribute>(`${this.baseUrl}/tree/attributes/${id}`);
+  }
+
+  updateTreeNodeAttributeById(
+    id: string,
+    data: Partial<ITreeAttribute>
+  ): Observable<ITreeAttribute> {
+    return this.http.put<ITreeAttribute>(`${this.baseUrl}/tree/attributes/${id}`, data);
   }
 }
