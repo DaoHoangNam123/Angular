@@ -1,0 +1,12 @@
+<div class="tree-view-wrapper">
+  <kendo-treeview
+    [nodes]="treeData"
+    textField="title"
+    [hasChildren]="hasChildren"
+    [children]="fetchChildren"
+    kendoTreeViewExpandable
+    kendoTreeViewSelectable
+    (nodeClick)="onNodeClick($event)"
+  >
+  </kendo-treeview>
+</div>

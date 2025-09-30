@@ -15,7 +15,13 @@ import { ToasterComponent } from './Toaster/toaster.component';
 import { StudentPopupComponent } from './StudentPopup/student-popup.component';
 import { StudentFormComponent } from './StudentForm/student-form.component';
 import { HeaderComponent } from './Header/header.component';
-
+import { TreeViewModule } from '@progress/kendo-angular-treeview';
+import { TreeNodeComponent } from './TreeModule/TreeNode/tree-node.component';
+import { TreeNodeInformationComponent } from './TreeModule/TreeNodeInformation/tree-node-information.component';
+import { TreeAttributeComponent } from './TreeModule/TreeAttribute/tree-attribute.component';
+import { TreeViewComponent } from './TreeModule/TreeView/tree-view.component';
+import { MatTabsModule } from '@angular/material/tabs';
+import { TreeTabComponent } from './TreeModule/TreeTab/tree-tab.component';
 @NgModule({
   declarations: [
     StudentGridComponent,
@@ -23,6 +29,11 @@ import { HeaderComponent } from './Header/header.component';
     StudentPopupComponent,
     StudentFormComponent,
     HeaderComponent,
+    TreeViewComponent,
+    TreeNodeComponent,
+    TreeNodeInformationComponent,
+    TreeAttributeComponent,
+    TreeTabComponent,
   ],
   imports: [
     CommonModule,
@@ -37,6 +48,8 @@ import { HeaderComponent } from './Header/header.component';
     InputsModule,
     LabelModule,
     NotificationModule,
+    TreeViewModule,
+    MatTabsModule,
   ],
   exports: [
     StudentGridComponent,
@@ -44,6 +57,11 @@ import { HeaderComponent } from './Header/header.component';
     StudentPopupComponent,
     StudentFormComponent,
     HeaderComponent,
+    TreeViewComponent,
+    TreeNodeComponent,
+    TreeNodeInformationComponent,
+    TreeAttributeComponent,
+    TreeTabComponent,
   ],
 })
 export class SharedComponentModule {}

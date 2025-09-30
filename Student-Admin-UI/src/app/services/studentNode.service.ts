@@ -6,10 +6,7 @@ import { TreeService } from '../api/tree.api';
 @Injectable({ providedIn: 'root' })
 export class StudentNodeService {
   private readonly treeData = new BehaviorSubject<ITreeNode[]>([]);
-  private readonly nodeInformation = new BehaviorSubject<{
-    title: string | null;
-    type: number | null;
-  }>({ title: null, type: null });
+  private readonly nodeInformation = new BehaviorSubject<ITreeNode | null>(null);
   private readonly attributesData = new BehaviorSubject<{ data: ITreeAttribute[]; total: number }>({
     data: [],
     total: 0,
@@ -38,7 +35,7 @@ export class StudentNodeService {
   */
   onNodeClick(event: any) {
     const node: ITreeNode = event.item.dataItem;
-    this.nodeInformation.next({ title: node.title, type: node.type });
+    this.nodeInformation.next(node);
 
     this.attributesData.next({
       data: node.attributes.map((item, index) => ({ ...item, index })),

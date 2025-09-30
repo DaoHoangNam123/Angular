@@ -9,3 +9,7 @@ export const mappingDataToUI = (studentList: IStudent[]) => {
     birthDay: new Date(student.birthDay),
   }));
 };
+
+export const mappingAttributeTypes = () => {
+  return [0, 1].map((i) => ({ id: i, name: i === 1 ? 'Folder' : 'File' }));
+};

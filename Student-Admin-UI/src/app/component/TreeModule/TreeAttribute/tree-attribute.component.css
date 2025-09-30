@@ -1,0 +1,47 @@
+.node-attributes__container {
+  display: block;
+  border-radius: 12px;
+  border: 1px solid #ccc;
+  background: #fff;
+  box-shadow: 0 0 40px 4px rgba(0, 0, 0, 0.15);
+  transition: transform 0.25s ease, box-shadow 0.25s ease;
+  padding: 10px;
+}
+.node-attributes__title {
+  font-weight: bold;
+  margin-bottom: 10px;
+}
+.attribute-name__field {
+  border: none;
+  outline: none !important;
+  box-shadow: none !important;
+  border-color: inherit !important;
+  width: 100%;
+}
+
+.delete-button {
+  align-self: flex-end;
+  padding: 5px 10px;
+  background: darkred;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.save-button {
+  align-self: flex-end;
+  padding: 5px 10px;
+  background: blue;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+::ng-deep .k-grid td {
+  text-align: center;
+  vertical-align: middle;
+}

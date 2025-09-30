@@ -1,0 +1,19 @@
+<div class="node-info">
+  <div class="node-info__title">
+    <mat-label class="node-info__label">Node title</mat-label>
+    <mat-form-field>
+      <input matInput class="node-info__field" [(ngModel)]="title" />
+    </mat-form-field>
+  </div>
+
+  <div class="node-info__type">
+    <mat-label class="node-info__label">Node type</mat-label>
+    <mat-form-field class="node-info__field">
+      <mat-select [(ngModel)]="type">
+        @for (type of types; track type.id) {
+        <mat-option [value]="type.id">{{ type.name }}</mat-option>
+        }
+      </mat-select>
+    </mat-form-field>
+  </div>
+</div>

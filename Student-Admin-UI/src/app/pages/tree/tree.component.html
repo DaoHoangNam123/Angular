@@ -1,79 +1,8 @@
 <div class="node__container">
   <div class="node-navigation">
-    <kendo-treeview
-      [nodes]="treeData"
-      textField="title"
-      [hasChildren]="hasChildren"
-      [children]="fetchChildren"
-      kendoTreeViewExpandable
-      kendoTreeViewSelectable
-      (nodeClick)="onNodeClick($event)"
-    >
-    </kendo-treeview>
+    <app-tree-view></app-tree-view>
   </div>
   <div class="node-details">
-    <h2 class="node-details__title">Node information</h2>
-    <div class="node-info">
-      <div class="node-info__title">
-        <mat-label class="node-info__label">Node title</mat-label>
-        <mat-form-field>
-          <input matInput class="node-info__field" [(ngModel)]="title" />
-        </mat-form-field>
-      </div>
-
-      <div class="node-info__type">
-        <mat-label class="node-info__label">Node type</mat-label>
-        <mat-form-field class="node-info__field">
-          <mat-select [(ngModel)]="type">
-            @for (type of types; track type.id) {
-            <mat-option [value]="type.id">{{ type.name }}</mat-option>
-            }
-          </mat-select>
-        </mat-form-field>
-      </div>
-    </div>
-    <div class="node-attributes__container">
-      <div class="node-attributes__title">Attributes</div>
-      <kendo-grid [data]="gridData">
-        <kendo-grid-column
-          field="index"
-          title="ID"
-          [width]="100"
-          [headerStyle]="{ 'justify-content': 'center', 'text-align': 'center' }"
-        >
-        </kendo-grid-column>
-        <kendo-grid-column
-          field="key"
-          title="Attribute Name"
-          [headerStyle]="{ 'justify-content': 'center' }"
-        >
-        </kendo-grid-column>
-        <kendo-grid-column
-          field="value"
-          title="Attribute Value"
-          [headerStyle]="{ 'justify-content': 'center' }"
-        >
-          <ng-template kendoGridCellTemplate let-dataItem>
-            <input kendoTextBox class="attribute-name__field" [(ngModel)]="dataItem.value" />
-          </ng-template>
-        </kendo-grid-column>
-        <kendo-grid-column
-          title="Action"
-          [width]="200"
-          [style]="{ 'justify-content': 'center', display: 'flex', gap: '10px' }"
-          [headerStyle]="{ 'justify-content': 'center' }"
-        >
-          <ng-template kendoGridCellTemplate let-dataItem>
-            <button class="save-button" (click)="onSave(dataItem)">Save</button>
-            <button class="delete-button" (click)="onDelete(dataItem)">Delete</button>
-          </ng-template>
-        </kendo-grid-column>
-      </kendo-grid>
-    </div>
-    <div class="node-details__footer">
-      <button class="node-details__save-button" (click)="saveNode()">Save</button>
-    </div>
+    <app-tree-node></app-tree-node>
   </div>
 </div>
-<div kendoDialogContainer></div>
-<app-toaster></app-toaster>

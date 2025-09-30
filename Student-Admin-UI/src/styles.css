@@ -56,7 +56,6 @@ app-root > .k-icon.k-i-loading {
 
 .k-treeview .k-treeview-leaf-text {
   white-space: nowrap !important;
-  overflow: hidden !important;
+  overflow-y: hidden !important;
   text-overflow: ellipsis !important;
-  max-width: 100px;
 }
