@@ -1,10 +1,30 @@
 <div class="tree-tab__container">
   <mat-tab-group>
-    <mat-tab label="First">
-      <app-tree-node-information></app-tree-node-information>
+    <mat-tab label="General Information">
+      <div class="tree-tab__general-information">
+        <div class="tree-tab__left-column">
+          <app-tree-node-information></app-tree-node-information>
+        </div>
+        <div class="tree-tab__right-column">
+          <div class="tree-tab__node-info">
+            <div class="node-info__submission-date">
+              <mat-label class="node-info__label">Submission Date</mat-label>
+              <mat-form-field>
+                <input matInput class="node-info__field" [(ngModel)]="submissionDate" />
+              </mat-form-field>
+            </div>
+            <div class="node-info__owner">
+              <mat-label class="node-info__label">Owner</mat-label>
+              <mat-form-field>
+                <input matInput class="node-info__field" [(ngModel)]="owner" readonly />
+              </mat-form-field>
+            </div>
+          </div>
+        </div>
+      </div>
     </mat-tab>
-    <mat-tab label="Second">
-      <app-tree-attribute></app-tree-attribute>
+    <mat-tab label="Attribute List">
+      <app-tree-attribute [readonly]="isReadOnly" [selectedNode]="nodeDetails"></app-tree-attribute>
     </mat-tab>
   </mat-tab-group>
 </div>

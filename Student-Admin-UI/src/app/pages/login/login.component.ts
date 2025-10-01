@@ -43,7 +43,7 @@ export class LoginComponent {
         )
         .subscribe({
           next: (res) => {
-            this.auth.login(res.jwtToken);
+            this.auth.login(res.jwtToken, res.user);
             this.router.navigate(['/dashboard']);
           },
           error: (err) => {

@@ -1,9 +1,7 @@
-import { Component, Input, OnDestroy, OnInit } from '@angular/core';
+import { ChangeDetectorRef, Component, OnDestroy, OnInit } from '@angular/core';
 import { Subscription } from 'rxjs';
 import { StudentNodeService } from '../../../services/studentNode.service';
-import { DialogRef, DialogService } from '@progress/kendo-angular-dialog';
-import { TreeTabComponent } from '../TreeTab/tree-tab.component';
-import { ITreeNode } from '../../../models/treeNode.model';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-tree-node-information',
@@ -12,10 +10,18 @@ import { ITreeNode } from '../../../models/treeNode.model';
   standalone: false,
 })
 export class TreeNodeInformationComponent implements OnInit, OnDestroy {
-  constructor(private readonly studentNodeService: StudentNodeService) {}
-
-  public title: string | null = null;
-  public type: number | null = null;
+  constructor(
+    private readonly studentNodeService: StudentNodeService,
+    private readonly cdr: ChangeDetectorRef
+  ) {
+    this.form.valueChanges.subscribe(() => {
+      this.studentNodeService.setIsDirty(!!this.form.dirty);
+    });
+  }
+  public form: FormGroup = new FormGroup({
+    title: new FormControl(null, Validators.required),
+    type: new FormControl(null, Validators.required),
+  });
   public types = [
     { id: 1, name: 'Folder' },
     { id: 0, name: 'File' },
@@ -25,8 +31,11 @@ export class TreeNodeInformationComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
     this.subscription.add(
       this.studentNodeService.nodeInformation$.subscribe((node) => {
-        this.title = node?.title ?? null;
-        this.type = node?.type ?? null;
+        this.form.patchValue({
+          title: node?.title,
+          type: node?.type,
+        });
+        this.cdr.detectChanges();
       })
     );
   }

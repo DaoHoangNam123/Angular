@@ -46,6 +46,10 @@ app-layout {
   min-height: 0 !important;
 }
 
+.k-dialog-wrapper {
+  z-index: 100 !important;
+}
+
 app-root > .k-icon.k-i-loading {
   font-size: 64px;
   position: absolute;

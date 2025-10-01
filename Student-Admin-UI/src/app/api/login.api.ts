@@ -9,8 +9,8 @@ export class LoginService {
 
   constructor(private readonly http: HttpClient) {}
 
-  login(username: string, password: string): Observable<{ jwtToken: string }> {
-    return this.http.post<{ jwtToken: string }>(`${this.baseUrl}/auth/login`, {
+  login(username: string, password: string): Observable<{ jwtToken: string; user: any }> {
+    return this.http.post<{ jwtToken: string; user: any }>(`${this.baseUrl}/auth/login`, {
       username,
       password,
     });

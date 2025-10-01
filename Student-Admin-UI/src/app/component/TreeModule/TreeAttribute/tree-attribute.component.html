@@ -1,38 +1,60 @@
 <div class="node-attributes__container">
   <div class="node-attributes__title">Attributes</div>
-  <kendo-grid [data]="gridData">
+
+  <kendo-grid
+    [kendoGridBinding]="gridData"
+    [filterable]="true"
+    (add)="addHandler($event)"
+    (edit)="editHandler($event)"
+    (cancel)="cancelHandler($event)"
+    (save)="saveHandler($event)"
+    (remove)="removeHandler($event)"
+  >
+    @if (!readonly) {
+    <ng-template kendoGridToolbarTemplate>
+      <button kendoGridAddCommand>Add new</button>
+    </ng-template>
+    }
     <kendo-grid-column
       field="index"
       title="ID"
       [width]="100"
       [headerStyle]="{ 'justify-content': 'center', 'text-align': 'center' }"
+      [filterable]="false"
     >
     </kendo-grid-column>
     <kendo-grid-column
       field="key"
       title="Attribute Name"
       [headerStyle]="{ 'justify-content': 'center' }"
+      [filterable]="true"
     >
     </kendo-grid-column>
     <kendo-grid-column
       field="value"
       title="Attribute Value"
       [headerStyle]="{ 'justify-content': 'center' }"
+      [filterable]="true"
     >
-      <ng-template kendoGridCellTemplate let-dataItem>
-        <input kendoTextBox class="attribute-name__field" [(ngModel)]="dataItem.value" />
-      </ng-template>
     </kendo-grid-column>
-    <kendo-grid-column
+    @if (!readonly) {
+    <kendo-grid-command-column
       title="Action"
       [width]="200"
       [style]="{ 'justify-content': 'center', display: 'flex', gap: '10px' }"
       [headerStyle]="{ 'justify-content': 'center' }"
     >
-      <ng-template kendoGridCellTemplate let-dataItem>
-        <button class="save-button" (click)="onSave(dataItem)">Save</button>
-        <button class="delete-button" (click)="onDelete(dataItem)">Delete</button>
+      <ng-template kendoGridCellTemplate let-isNew="isNew">
+        <button kendoGridEditCommand [primary]="true">Edit</button>
+        <button kendoGridRemoveCommand>Remove</button>
+        <button kendoGridSaveCommand [disabled]="!!formGroup?.invalid">
+          {{ isNew ? 'Add' : 'Update' }}
+        </button>
+        <button kendoGridCancelCommand>
+          {{ isNew ? 'Discard changes' : 'Cancel' }}
+        </button>
       </ng-template>
-    </kendo-grid-column>
+    </kendo-grid-command-column>
+    }
   </kendo-grid>
 </div>

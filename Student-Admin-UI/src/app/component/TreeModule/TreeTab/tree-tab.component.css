@@ -1,0 +1,34 @@
+.tree-tab__general-information {
+  display: flex;
+  justify-content: start;
+  align-items: center;
+  width: 100%;
+  gap: 50px;
+}
+
+.tree-tab__node-info {
+  display: flex;
+  flex-direction: column;
+  align-items: start;
+  justify-content: flex-start;
+  padding-top: 40px;
+  padding-bottom: 10px;
+}
+
+.node-info__submission-date {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+}
+
+.node-info__owner {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+}
+
+.node-info__label {
+  width: 100px;
+}

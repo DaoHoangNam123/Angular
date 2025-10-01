@@ -18,8 +18,8 @@ export class TreeService {
     return this.http.get<ITreeNode>(`${this.baseUrl}/tree/${id}`);
   }
 
-  getTreeNodeAttributes(id: string): Observable<ITreeNode> {
-    return this.http.get<ITreeNode>(`${this.baseUrl}/tree/attributes/${id}`);
+  getTreeNodeAttributes(id: string): Observable<ITreeAttribute[]> {
+    return this.http.get<ITreeAttribute[]>(`${this.baseUrl}/tree/attributes/${id}`);
   }
 
   getTreeNodeChildren(id: string): Observable<ITreeNode[]> {
@@ -28,6 +28,11 @@ export class TreeService {
 
   updateTreeNodeById(id: string, data: Partial<ITreeNode>): Observable<ITreeNode> {
     return this.http.put<ITreeNode>(`${this.baseUrl}/tree/${id}`, data);
+  }
+
+  addTreeNodeAttribute(attribute: ITreeAttribute): Observable<ITreeAttribute> {
+    const id = attribute.nodeId;
+    return this.http.post<ITreeAttribute>(`${this.baseUrl}/tree/attributes/${id}`, attribute);
   }
 
   deleteTreeNodeAttribute(id: string): Observable<ITreeAttribute> {

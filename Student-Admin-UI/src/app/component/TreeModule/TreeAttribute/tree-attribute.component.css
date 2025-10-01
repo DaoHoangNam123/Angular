@@ -1,6 +1,5 @@
 .node-attributes__container {
   display: block;
-  border-radius: 12px;
   border: 1px solid #ccc;
   background: #fff;
   box-shadow: 0 0 40px 4px rgba(0, 0, 0, 0.15);
