@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { ITreeAttribute, ITreeNode } from '../models/treeNode.model';
-import { environment } from '../../environments/evironments';
+import { environment } from '../../environments/environments';
 
 @Injectable({ providedIn: 'root' })
 export class TreeService {
